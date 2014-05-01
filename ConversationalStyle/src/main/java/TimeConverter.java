@@ -1,7 +1,5 @@
 package main.java;
 
-import java.util.Calendar;
-
 import main.java.converters.HourConverter;
 import main.java.converters.MinutesConverter;
 
@@ -10,25 +8,36 @@ public class TimeConverter {
 	private HourConverter hourConverter;
 	private MinutesConverter minutesConverter;
 
+	// In spring or atg this would be made through injection
 	public TimeConverter() {
 		hourConverter = new HourConverter();
 		minutesConverter = new MinutesConverter();
 	}
 
+	/**
+	 * Returns the associated message to the hour and minutes passed as
+	 * parameters.
+	 * 
+	 * @param pHour
+	 * @param pMinutes
+	 * @return
+	 */
 	public String getTime(int pHour, int pMinutes) {
+
+		// If minutes is 45 or more, the hour is increased in 1 to get the
+		// "quarter to 'next hour'" message properly.
+		// If smaller ranges are needed, this threshold must be changed.
 		if (pMinutes >= 45) {
 			pHour = pHour + 1;
 		}
-		return getMinutesConverter().getConvertedMinutes(pMinutes) + " "
-				+ getHourConverter().getConvertedHour(pHour);
+		StringBuilder sb = new StringBuilder();
+		sb.append(getMinutesConverter().getConvertedMinutes(pMinutes));
+		if (sb.length() != 0) {
+			sb.append(" ");
+		}
+		return sb.append(getHourConverter().getConvertedHour(pHour)).toString();
 	}
 
-	public String getCurrentTime() {
-		Calendar calendar = Calendar.getInstance();
-		return getTime(calendar.get(Calendar.HOUR_OF_DAY),
-				calendar.get(Calendar.MINUTE));
-	}
-	
 	public HourConverter getHourConverter() {
 		return hourConverter;
 	}

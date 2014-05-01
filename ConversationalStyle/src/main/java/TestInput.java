@@ -6,6 +6,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
+/**
+ * CLI test tool that takes a string in HH:mm format and prints the associated value
+ * 
+ * If something like 33:44 is input, the parsing transforms it to a "real" date and is printed, with the associated message in conversational style.
+ * 
+ * @author Eusebiotrigo
+ * 
+ */
 public class TestInput {
 
 	public static void main(String[] args) {
